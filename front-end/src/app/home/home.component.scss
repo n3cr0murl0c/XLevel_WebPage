@@ -1,0 +1,41 @@
+ngb-carousel{
+    // background-color:gray;
+    height: 40vh;
+    width: 97vw;
+    position: relative;
+    display: flex;
+    margin: auto;
+    padding: 0;
+    // border: 1px solid black;
+    .picsum-img-wrapper {
+        border: 1px solid white;
+        position: relative;
+        display: flex;
+        max-width: 100vw;
+        max-height: 40vh;
+        height: inherit;
+        width: inherit;
+        padding: 0.25rem ;
+        margin: 0;
+        align-content: center;
+        justify-content: center;
+        // height: 0;
+        // padding-top: 55%; /* Keep ratio for 900x500 images */
+        img{
+            max-width: inherit;
+            max-height: inherit;
+            height: inherit;
+            width: inherit;
+            object-fit: cover;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+        .carousel-inner{
+            .carousel-control-prev .carousel-control-next {
+                color:aqua
+            }
+        }
+    }
+}

@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+// @import '../node_modules/bulma/bulma.sass';
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700&family=Nunito+Sans:wght@400;700&family=Poppins:wght@200;400;500;700&family=Roboto:wght@400;500;700;900&display=swap');
+/* ----- Variables ----- */
+$color-primary: #4c4c4c;
+$color-secondary: #a6a6a6;
+$color-highlight: #ff3f40;
+$honolulu-blue: #0076BEff;
+$deep-sky-blue: #00BFFEff;
+
+/* ----- Global ----- */
+* {
+	box-sizing: border-box;
+}
+
+html{
+	font-size: 16px;
+}
+body {
+	height: 100%;
+	margin: 0;
+    font-family: 'Lato','Nunito',sans-serif;
+    font-size: 18px;
+    overflow-x: hidden;
+}
+
+// h3 {
+// 	font-size: 0.7em;
+// 	letter-spacing: 1.2px;
+// 	color: $color-secondary;
+// }
+
+// img {
+// 			max-width: 100%;
+// 			filter: drop-shadow(1px 1px 3px $color-secondary);
+// 		}
+
+

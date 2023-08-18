@@ -1,0 +1,36 @@
+<section class="store">
+    <div class="container">
+      <div class="row">
+        <div class="column bread-crumb-navbar">
+          <p>breadcrumbnavbar</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column-2 store-sidemenu">
+          sidemenu works
+        </div>
+        <div class="column product-list">
+          <a href="#" *ngFor="
+          let item of productos
+          | paginate
+            :{
+              itemsPerPage: tableSize,
+              currentPage:pagina,
+              totalItems:count
+            };
+            let i = index
+          "
+          class="product-card"
+          >
+            
+          </a>
+        </div>
+      </div>
+    </div>
+  
+    
+  
+  
+  </section>
+      
+  

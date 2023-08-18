@@ -1,0 +1,50 @@
+$honolulu-blue: #0076BEff;
+$deep-sky-blue: #00BFFEff;
+
+.categoria-menu{
+    background-color: $honolulu-blue;
+    color: white;
+    border-radius: 0 5px;
+}
+
+.categoria-menu:hover{
+    background-color: $honolulu-blue;
+    color: white;
+}
+.categoria-menu::after{
+    background-color: $honolulu-blue;
+    color: white;
+}
+.icons-bar{
+    // width: 50%;
+    display: flex;
+    margin: 1rem;
+    padding: 0 0.25rem;
+    // align-content: flex-end;
+    // justify-content: center;
+    // flex-wrap: wrap;
+    // flex-shrink: 1;
+    // flex-direction: row;
+    a{
+        font-size: 18px;
+    }
+    a:hover{
+        transform-box: border-box;
+        transform: scale(1.08);
+    }
+    .icon {
+        text-decoration: none;
+        color: black;
+    }
+    
+}
+.logo{
+    // width: 50%;
+    padding: 0.5rem;
+    display: flex;
+    margin: auto;
+    padding: 0.5em 0.25em 0 0.25em;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: row;
+}
