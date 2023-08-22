@@ -1,6 +1,5 @@
-import { Nav3Component } from './nav3/nav3.component';
-import { Nav2Component } from './nav2/nav2.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
+
 // import {logo_xlevel} from '../../assets/images/';
 
 import {
@@ -58,8 +57,12 @@ export const DropDownAnimation = trigger("dropDownMenu", [
 export class HeaderComponent implements OnInit{
   
   logo_xlevel = '../../../assets/images/logoxlevel1.svg';
+
+  constructor(){}
   
   ngOnInit(): void {
     
   }
+
+  
 }

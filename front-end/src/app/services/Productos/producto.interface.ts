@@ -27,28 +27,28 @@ export interface AuthResponse {
     fechaCreacion: string
   }
   
-  export interface BodegaResponse {
-    success: boolean
-    dataResponse: BodegaDataResponse[]
-    mensaje: string
-  }
+  // export interface BodegaResponse {
+  //   success: boolean
+  //   dataResponse: BodegaDataResponse[]
+  //   mensaje: string
+  // }
   
-  export interface BodegaDataResponse {
-    ID_PRODUCTO: number
-    CODIGOPRINCIPAL: string
-    NOMBRE: string
-    PRECIOSINIVA: number
-    STOCK: number
-    BODEGA: string
-    CATEGORIA: string
-    COD_AUXILIAR: string
-    PESO: number
-    TIPO_SOLUCIONES: string
-    CONTROL_SERIES: string
-    SUBCATEGORIA?: string
-    UNIDAD_MEDIDA: string
-    MARCA: string
-    MODELO: string
-    COSTO?: number
-    ESTADO: string
-  }
+  // export interface BodegaDataResponse {
+  //   ID_PRODUCTO: number
+  //   CODIGOPRINCIPAL: string
+  //   NOMBRE: string
+  //   PRECIOSINIVA: number
+  //   STOCK: number
+  //   BODEGA: string
+  //   CATEGORIA: string
+  //   COD_AUXILIAR: string
+  //   PESO: number
+  //   TIPO_SOLUCIONES: string
+  //   CONTROL_SERIES: string
+  //   SUBCATEGORIA?: string
+  //   UNIDAD_MEDIDA: string
+  //   MARCA: string
+  //   MODELO: string
+  //   COSTO?: number
+  //   ESTADO: string
+  // }

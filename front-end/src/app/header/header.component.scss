@@ -1,17 +1,38 @@
-
-
-header {
+@import 'bootstrap/scss/bootstrap';
+.main-header {
+    display: flexbox;
     background: white;
     padding: 0;
     border-bottom: 1px solid #123123;
 }
 .logo{
     // width: 10%;
-    padding: 0.75rem;
+    padding: 0.25rem 0.5rem;
     display: flex;
-    margin: auto;
-    padding: .25rem;
+    // margin: auto;
+    max-width: 350px;
+    width: 350px;
     align-content: center;
     justify-content: center;
     flex-wrap: row;
+}
+.main-menu{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 2.5rem;
+    .main-menu-1{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        
+
+    }
+    .main-menu-2{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }

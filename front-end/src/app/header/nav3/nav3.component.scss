@@ -1,3 +1,4 @@
+// @import 'bootstrap/scss/bootstrap';
 $honolulu-blue: #0076BEff;
 $deep-sky-blue: #00BFFEff;
 
@@ -6,7 +7,11 @@ $deep-sky-blue: #00BFFEff;
     color: white;
     border-radius: 0 5px;
 }
-
+.menu-header{
+    font-family: 'Nunito',sans-serif;
+    font-weight: 400;
+    
+}
 .categoria-menu:hover{
     background-color: $honolulu-blue;
     color: white;
@@ -19,7 +24,7 @@ $deep-sky-blue: #00BFFEff;
     // width: 50%;
     display: flex;
     margin: 1rem;
-    padding: 0 0.25rem;
+    padding: 0 0.2rem;
     // align-content: flex-end;
     // justify-content: center;
     // flex-wrap: wrap;
@@ -40,7 +45,7 @@ $deep-sky-blue: #00BFFEff;
 }
 .logo{
     // width: 50%;
-    padding: 0.5rem;
+    padding: 1.25rem 0.5rem;
     display: flex;
     margin: auto;
     padding: 0.5em 0.25em 0 0.25em;

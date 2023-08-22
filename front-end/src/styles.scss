@@ -1,8 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 // @import '../node_modules/bulma/bulma.sass';
 /* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
+// @import 'bootstrap/scss/bootstrap';
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import 'primeflex/primeflex.scss';
+@import "primeicons/primeicons.css";
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700&family=Nunito+Sans:wght@400;700&family=Poppins:wght@200;400;500;700&family=Roboto:wght@400;500;700;900&display=swap');
+
 /* ----- Variables ----- */
 $color-primary: #4c4c4c;
 $color-secondary: #a6a6a6;
@@ -21,7 +26,7 @@ html{
 body {
 	height: 100%;
 	margin: 0;
-    font-family: 'Lato','Nunito',sans-serif;
+	font-family: 'Lato','Nunito',sans-serif;
     font-size: 18px;
     overflow-x: hidden;
 }

@@ -1,36 +1,158 @@
-<section class="store">
-    <div class="container">
-      <div class="row">
-        <div class="column bread-crumb-navbar">
-          <p>breadcrumbnavbar</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="column-2 store-sidemenu">
-          sidemenu works
-        </div>
-        <div class="column product-list">
-          <a href="#" *ngFor="
-          let item of productos
-          | paginate
-            :{
-              itemsPerPage: tableSize,
-              currentPage:pagina,
-              totalItems:count
-            };
-            let i = index
-          "
-          class="product-card"
-          >
-            
-          </a>
-        </div>
-      </div>
-    </div>
+<main class="container-fluid ms-3">
+
+  <!-- <p-breadcrumb class="max-w-full" [model]="menu_items" [home]="home"></p-breadcrumb> -->
+<p-dataView #dv 
+  [value]="productos"
+  [layout]="layout" 
   
+  [paginator]="true"
+  [paginatorPosition]="pagPosition"
+  [rows]="6"
+  [lazy]="true"
+  
+  >
+        
+               
+    <ng-template pTemplate="header" >
+        <div class="row tienda-menu">
+            <div class="col-2 align-content-center justify-content-center">
+              <p-dataViewLayoutOptions ></p-dataViewLayoutOptions>
+            </div>
+
+            <div class="col">
+              <p-menubar 
+                [model]="options_tienda"
+                [styleClass]="menuStyle"
+                ></p-menubar>
+            </div>
+            
+            <!-- <div class="col">
+              <p-dropdown 
+                [options]="sortOptions" 
+                [(ngModel)]="sortKey" 
+                placeholder="Filtrar por Precio" 
+                (onChange)="onSortChange($event)" 
+                styleClass="mb-2 md:mb-0"></p-dropdown>
+            </div>
+
+            <div class="col">
+              <p-dropdown 
+                [options]="sortOptions2" 
+                [(ngModel)]="sortKey2" 
+                placeholder="Filtrar por Categoria" 
+                (onChange)="onSortChange($event)" 
+                styleClass="mb-2 md:mb-0"></p-dropdown>
+            </div>
+
+            <div class="col">
+              <p-dropdown 
+                [options]="sortOptions3" 
+                [(ngModel)]="sortKey3" 
+                placeholder="Filtrar por Marca" 
+                (onChange)="onSortChange($event)" 
+                styleClass="mb-2 md:mb-0"></p-dropdown>
+            </div> 
+          -->
+        </div>
+    </ng-template>
+
+    <ng-template #listProduct let-product pTemplate="listItem">
+      <div class="col-12">
+          <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+              <img class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round" [src]="'../../assets/images/productos/'+ product.imageURL" [alt]="product.NOMBRE" />
+              <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                  <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                      <div class="text-2xl font-bold text-900">{{ product.NOMBRE }}</div>
+                      <p-rating 
+                        [(ngModel)]="product.stars" 
+                        [readonly]="false" 
+                        [cancel]="false"
+                        (onRate)="productRating($event,product.ID_PRODUCTO)"
+                        >
+                      </p-rating>
+                      <div class="flex align-items-center gap-3">
+                          <span class="flex align-items-center gap-2">
+                              <i class="pi pi-tag"></i>
+                              <span class="font-semibold">{{ product.CATEGORIA }}</span>
+                          </span>
+                          <p-tag [value]="product.ESTADO" [severity]="getSeverity(product)"></p-tag>
+                      </div>
+                  </div>
+                  <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
+                      <span class="text-2xl font-semibold" *ngIf="product.precio">{{ '$' + product.precio }}</span>
+                      <span class="text-2xl font-semibold" *ngIf="!product.precio">{{ '$' + product.PRECIOSINIVA }}</span>
+                      <span class="iva">
+                        NO Incluye IVA
+                       </span>
+                      <button pButton (onclick)="addToCart($event,product.ID_PRODUCTO,client.id)" icon="pi pi-shopping-cart" class="md:align-self-end mb-2 p-button-rounded" [disabled]="product.ESTADO === 'OUTOFSTOCK'"></button>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </ng-template>
+
+    <ng-template #gridProduct let-product pTemplate="gridItem">
+        
+            <div class="col-3 border border-1 m-1">
+                <div class="row product-header">
+                    <div class="col-6">
+                      <span class="product-tag">
+                        <i class="pi pi-tag"></i>
+                        <span class="product-tag" *ngFor="let tag of product.tags">{{ tag }}, </span>
+                    </span>
+                    </div>
+                    <div class="col-3 product-tag mx-auto mx-auto justify-content-center">
+                      <p-tag [value]="product.ESTADO" [severity]="getSeverity(product)" ></p-tag>
+                    </div>
+                    <div class="col-3 product-favorite mx-auto justify-content-center">
+                      <button pButton (onclick)="addToFavorites($event,product.ID_PRODUCTO,client.id)" icon="pi pi-heart" class="p-button-rounded p-button-secondary p-button-text p-button-raised"></button>
+                    </div>
+                </div>
+                <div class="row product-content">
+                    <img class="product-image" [src]="'../../assets/images/productos/'+ product.imageURL" [alt]="product.NOMBRE" />
+                    <div class="product-name">{{ product.NOMBRE }}</div>
+                    <div class="row"><!-- Rating -->
+                      <div class="col">
+                        <div class="product-rating">
+                          <p-rating 
+                            [(ngModel)]="product.stars"
+                            [cancel]="false"
+                            (onRate)="productRating($event,product.ID_PRODUCTO)"
+                          >
+                          </p-rating>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="row product-caption">
+                    <div class="col-8 text-center" *ngIf="product.precio">
+                      <span class="product-price">{{ '$' + product.precio }}</span>
+                      <span class="iva">
+                        Incluye IVA
+                      </span>
+                    </div>
+
+                    <div class="col-8 text-center" *ngIf="!product.precio">
+                      <span class="product-price">{{ '$' + product.PRECIOSINIVA }}</span>
+                      <span class="iva">
+                        NO Incluye IVA
+                      </span>
+                    </div>
+                    
+                    <div class="col">
+                      <button pButton (onclick)="addToCart($event,product.ID_PRODUCTO,client.id)" icon="pi pi-shopping-cart" class="p-button-rounded p-button-success p-button-outlined" [disabled]="product.ESTADO === 'OUTOFSTOCK'"></button>
+                    </div>
+                </div>
+            </div>
+        
+    </ng-template>
     
   
+
+</p-dataView>
+   
   
-  </section>
+  
+  </main>
       
   

@@ -1,13 +1,13 @@
 <div class="container-fluid header-0 vw-100">
-    <div class="row slider-1">
+    <div class="row slider-1" *ngIf="header_0_enable">
         <p class="py-0 px-3 m-0">
             {{header_0}}
         </p>
     </div>
-    <div class="link-bar">
+    <div class="link-bar"  *ngIf="header_1_enable">
         
       <div class="flex-column">
-        <a href="#">
+        <a href="#" routerLink="/ubicanos">
             <span class="">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
                     <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
@@ -17,14 +17,14 @@
             </span>
             
         </a>
-        <a href="#">
+        <a href="#" routerLink="/atencion_al_cliente">
           Servicio al Cliente
         </a>
         
       </div>
        
       <div class="flex-column">
-        <a href="#">
+        <a href="#" routerLink="precompra">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi bi-gem" viewBox="0 0 16 16">
                     <path d="M3.1.7a.5.5 0 0 1 .4-.2h9a.5.5 0 0 1 .4.2l2.976 3.974c.149.185.156.45.01.644L8.4 15.3a.5.5 0 0 1-.8 0L.1 5.3a.5.5 0 0 1 0-.6l3-4zm11.386 3.785-1.806-2.41-.776 2.413 2.582-.003zm-3.633.004.961-2.989H4.186l.963 2.995 5.704-.006zM5.47 5.495 8 13.366l2.532-7.876-5.062.005zm-1.371-.999-.78-2.422-1.818 2.425 2.598-.003zM1.499 5.5l5.113 6.817-2.192-6.82L1.5 5.5zm7.889 6.817 5.123-6.83-2.928.002-2.195 6.828z"/>
@@ -33,7 +33,7 @@
             </span>
         </a>
   
-        <a href="#">
+        <a href="#" routerLink="/precompra/ayuda">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
