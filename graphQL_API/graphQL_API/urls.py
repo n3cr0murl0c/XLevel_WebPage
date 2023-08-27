@@ -16,7 +16,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from graphene_django.views import GraphQLView
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
+# from usuarios.schema import auth_schema
+from graphQL_API.schema import schema
+from django.conf.urls.static import static
+from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    # path('api',GraphQLView.as_view(graphiql=True),name='endpoint'),
+    path('api',csrf_exempt(GraphQLView.as_view(graphiql=True,schema=schema)),name='endpoint'),
+    # path('auth-api',csrf_exempt(GraphQLView.as_view(graphiql=True, schema=auth_schema)),name='auth-endpoint')
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+
+admin.site.site_header = "Panel de Control XLevel"
+admin.site.site_title = "XLevel Admin"
+admin.site.index_title = "XLevel Admin"

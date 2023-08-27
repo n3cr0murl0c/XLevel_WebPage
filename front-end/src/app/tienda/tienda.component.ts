@@ -1,9 +1,18 @@
+
 import { Component, OnInit } from '@angular/core';
-import { Producto, ProductoModel } from '../Shared/Models/productos.models';
-import { ProductosService } from '../services/productos.service';
+import { Producto, ProductoModel, } from '../Shared/Models/productos.models';
+
 import { SelectItem } from 'primeng/api';
 import { MenuItem } from 'primeng/api';
-import { Observable } from 'rxjs';
+import { Observable,map,of } from 'rxjs';
+
+
+import { asyncMap } from '@apollo/client/utilities';
+import { ProductoService } from '../services/producto/producto.service';
+import { ApiService } from '../services/api/api.service';
+
+// import {} from '../../../../graphQL_API/media/'
+const MEDIA_PATH ='http://localhost:8089/media/'
 
 
 @Component({
@@ -17,6 +26,7 @@ export class TiendaComponent implements OnInit {
   home?:MenuItem  
   menu_items?:MenuItem[]
   productos:ProductoModel[] = []
+  productoss:any;
   // productos:Producto[] = []
   pagina:number = 1;
   count:number = 0;
@@ -40,58 +50,60 @@ export class TiendaComponent implements OnInit {
   pdataStyle:any='container-fluid'
   gridStyle:any='container-sm row-cols-auto'
   menuStyle:any='bg-white'
-  contexto={
-    lista_productos:this.getAll()
-  }
+
   client?:any;
 
   options_tienda?:MenuItem[]
   //***********Varibles Observables para Asyncs******************//
   lista_productos?:Observable<Producto>[];
   lista_productos_filtrado?:Observable<Producto>[];
+  media=MEDIA_PATH
   //***********CONSTRUCTOR(INIT)***********//
-  constructor(private productosservice:ProductosService, ){
-
+  constructor(private xLevel_api:ProductoService, private apollo:ApiService,
+              private grapQL_api:ApiService
+               ){
+    //in producton csrf excepmt will be down, so apollo needs to send the csrftoken
+    // headers: {
+    //   'X-CSRFToken': Cookies.get('csrftoken')
+    // }
   }
 
   //***********METHODS***********//
   ngOnInit():void{
-    if (!this.fetchProductos()){
-      this.productos=[
-        {
-          ID_PRODUCTO:1,
-          CODIGOPRINCIPAL:'ABCD000',
-          NOMBRE:'Bolso Billetera Guess Cuero PU Saffiano',
-          PRECIOSINIVA:54.99,
-          tags:['Accesorios','Bolsos'],
-          imageURL:'0002_GUWBSSABE_3_1800x1800.jpg',
-          favorite:false,
-          stars:0,
-          STOCK:5,
-          BODEGA:'XLevel Bodega',
-          ESTADO:'activo',
-          CATEGORIA:'Accesorio',
-          MARCA:'XLVL'
+    this.grapQL_api.getProducts()
+    .subscribe(
+      {
+        next: (response)=>{
+          console.log('en getProductsAPI() llamando de graphQL')
+          // Object.keys(response).forEach(key => console.log(key));
+          console.log('en mapeo de getProductAPI pasando de type(Producto) to type(ProductoModel)')
+          //la funcion ya envía cambiado el array a un array de productos.
+          this.productos = response.map(
+            item=>{
+              
+              // console.log(item)
+              // Object.keys(item).forEach(key => console.log(key));
+              let model=new ProductoModel(
+                item.id,
+                item.codigoPrincipal,
+                item.nombre,
+                item.precio,
+                // imageURL=item.imagenes[0]
+              )
+              model.imageURL= item.imagenes
+              model.ESTADO='EN STOCK'
+              return model
+            }
+          )
+          console.log(this.productos)
         },
-        {
-          ID_PRODUCTO:2,
-          CODIGOPRINCIPAL:'ABCD001',
-          NOMBRE:'Estuche Guess Saffiano Logo Metal iPhone 13 Serie',
-          PRECIOSINIVA:49.99,
-          tags:['Accesorios','iPhone', 'iPhone 13' ],
-          imageURL:'0001_GUHCP13MPSASBPI_4_1800x1800.jpg',
-          favorite:false,
-          stars:0,
-          STOCK:5,
-          BODEGA:'XLevel Bodega',
-          ESTADO:'activo',
-          CATEGORIA:'Accesorio',
-          MARCA:'XLVL'
-        },
-        
-      ]
-    }
-    
+        error: (e)=>{
+          console.log('APIERROR',e)
+          alert('API ERROR | '+e)
+        }
+      }
+    )
+      
     this.sortOptions = [
       { label: 'Precio Mayor a Menor', value: '!price' },
       { label: 'Precio Menor a Mayor', value: 'price' }
@@ -132,59 +144,29 @@ export class TiendaComponent implements OnInit {
     ]
     
   }
-  getAll():Producto[]{
-    return [
-      {
-        id:1,
-        codigo_principal:'ABCD000',
-        nombre:'Bolso Billetera Guess Cuero PU Saffiano',
-        precio:54.99,
-        tags:['Accesorios','Bolsos'],
-        imageURL:'0002_GUWBSSABE_3_1800x1800.jpg',
-        favorite:false,
-        stars:0,
-        stock:5,
-        bodega:'XLevel Bodega',
-        estado:'activo',
-        categoria:'Accesorio'
-      },
-      {
-        id:2,
-        codigo_principal:'ABCD001',
-        nombre:'Estuche Guess Saffiano Logo Metal iPhone 13 Serie',
-        precio:49.99,
-        tags:['Accesorios','iPhone', 'iPhone 13' ],
-        imageURL:'0001_GUHCP13MPSASBPI_4_1800x1800.jpg',
-        favorite:false,
-        stars:0,
-        stock:5,
-        bodega:'XLevel Bodega',
-        estado:'activo',
-        categoria:'Accesorio'
-      }
-    ]
-  };
+  
   
   fetchProductos():boolean {
     let status=false
     console.log('en fetchProductos')
-    // console.log(this.productosservice.whichBodegas()[0])
-    this.productosservice.getProductos(this.productosservice.bodegas[0])
+    // console.log(this.xLevel_api.whichBodegas()[0])
+    this.xLevel_api.getProductos(this.xLevel_api.bodegas[0])
     .subscribe(
       {
         next: (data) => {
           if (data.success===true){
+
             console.log(data.mensaje);
             this.productos=data.dataResponse
-            status=true
+            status=data.success
           } else {
             console.log('API ERROR:',data.mensaje);
             if(data.mensaje.includes('Token Expirado')){
               
-              this.productosservice.updateToken();
-              status= false
+              this.xLevel_api.updateToken();
+              status=data.success
             }else{
-              status= true
+              status=data.success
             }
           }
           },
@@ -201,24 +183,23 @@ export class TiendaComponent implements OnInit {
     )
     return status
   };
-  fetchProductosPerCategory(category:string):any{
-    let aux:any[]=[]
-    for (let i = 0; i < this.productosservice.bodegas.length; i++) {
-      this.productosservice.getProductosCategoria(
-        this.productosservice.bodegas[i],
+  fetchProductosPerCategory(category:string){
+    let list:any[]=[]
+    for (let i = 0; i < this.xLevel_api.bodegas.length; i++) {
+      this.xLevel_api.getProductosporCategoria(
         category
-      ).subscribe(
+      )[i]
+      .subscribe(
         (data)=>{
-          aux.push(data.dataResponse)
-          this.lista_productos_filtrado = aux
-          return this.lista_productos_filtrado
+          list.push(data.dataResponse)
+          console.log(data.mensaje)
         }
-      )
+      ) 
       
     }
-    return 'end syncronous'
-
-    
+    this.lista_productos_filtrado = list
+    return list
+       
 
   };
   productRating(event:any,item_id:number):void{
@@ -236,9 +217,9 @@ export class TiendaComponent implements OnInit {
     
     // console.log(this.productos[0].id==item_id)
   };
-  getSeverity(product: Producto) {
-    switch (product.estado) {
-        case 'INSTOCK':
+  getSeverity(product: ProductoModel) {
+    switch (product.ESTADO) {
+        case 'ENSTOCK':
             return 'success';
 
         case 'LOWSTOCK':

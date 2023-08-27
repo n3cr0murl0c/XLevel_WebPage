@@ -3,7 +3,8 @@ import { NgbCarousel, NgbCarouselModule, NgbSlideEvent, NgbSlideEventSource } fr
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Producto } from '../Shared/Models/productos.models';
-import { ProductosService } from '../services/productos.service';
+import { ProductoService } from '../services/producto/producto.service';
+import { ApiService } from '../services/api/api.service';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +20,13 @@ export class HomeComponent{
   pauseOnHover = true;
   pauseOnFocus = true;
   responsiveOptions: any[] | undefined;
+  constructor(
+	private productService: ProductoService,
+	private ApiService:ApiService
+				
+	){
+    
+  }
 
   OnInit(){
 	this.productos_destacados =[
@@ -71,9 +79,7 @@ export class HomeComponent{
 	];
   }
 
-  constructor(private productService: ProductosService){
-    
-  }
+
   
   getSeverity(status: string) {
         switch (status) {

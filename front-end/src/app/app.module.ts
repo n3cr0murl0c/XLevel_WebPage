@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomeComponent } from './home/home.component';
+
 import { FooterComponent } from './footer/footer.component';
 import {HttpClientModule} from '@angular/common/http'
 import { TiendaComponent } from './tienda/tienda.component';
@@ -29,6 +29,11 @@ import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MenubarModule } from 'primeng/menubar';
+import { GraphQLModule } from './graphql.module';
+import { ProductoComponent } from './tienda/producto/producto.component';
+import { CarritoComponent } from './tienda/carrito/carrito.component';
+import { HomeComponent } from './home/home.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +50,8 @@ import { MenubarModule } from 'primeng/menubar';
     PrecompraayudaComponent,
     ProductosComponent,
     CarritosideComponent,
+    ProductoComponent,
+    CarritoComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +68,8 @@ import { MenubarModule } from 'primeng/menubar';
     BreadcrumbModule,
     CarouselModule,
     ButtonModule,
-    MenubarModule
+    MenubarModule,
+    GraphQLModule
   ],
   providers: [],
   bootstrap: [AppComponent]
