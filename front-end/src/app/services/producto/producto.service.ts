@@ -60,23 +60,23 @@ export class ProductoService implements OnInit {
   }
 
   getProducto(id:number):Observable<BodegaResponse>[]{
-    let aux=[]
+    let aux:any=[]
     for (let i = 0; i < this.bodegas.length; i++) {
-      let bodega_payload ={
+      let producto_payload ={
         bodega:this.bodegas[i],
         categoria:'',
-        codigo:id,
-        producto:''
-      }
-      aux.push(this.http.post<BodegaResponse>(
+        codigo:'',
+        producto:id
+      }  
+      return aux.push(this.http.post<BodegaResponse>(
         BODEGA_URL+this.token,
-        bodega_payload
-      )  )
-      
+        producto_payload
+      ))
     }
-    return aux
+    return aux    
     
   }
+
   getProductosporCategoria(categoria:string):Observable<BodegaResponse>[]{
     let aux=[]
     for (let i = 0; i < this.bodegas.length; i++) {

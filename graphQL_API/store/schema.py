@@ -80,7 +80,8 @@ class Query(graphene.ObjectType):
     ordenes = graphene.List(Order)
     direciones = graphene.List(Direccion)
     telefonos = graphene.List(Telefono)
-    productos = graphene.List(Producto)
+    productos = graphene.List(Producto,item_id=graphene.ID(),name=graphene.String(),)
+    # producto = graphene.
     #Response to logged in
     me = graphene.Field(BaseUserType)
 
@@ -97,8 +98,14 @@ class Query(graphene.ObjectType):
         return user
     
 
-    def resolve_productos(self, info):
+    def resolve_productos(self, info, nombre_item=None, item_id=None):
+        if nombre_item:
+            return [item for item in ProductoModel.objects.filter(nombre=nombre_item) if item.nombre_item == nombre_item]
+        if item_id:
+            return [ProductoModel.objects.get(pk=item_id)]
+        
         return ProductoModel.objects.all()
+    
     def resolve_direcciones(self,info):
         return DireccionModel.objects.all()
     def resolve_clientes(self,info):

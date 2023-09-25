@@ -1,0 +1,12 @@
+.image-wrapper{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 1rem;
+    $base-width: 240px;
+    .product-img{
+        width: $base-width;
+        height: calc($base-width/1.62);
+        padding: 1rem;
+    }
+}

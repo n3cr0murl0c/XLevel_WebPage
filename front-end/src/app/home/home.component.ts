@@ -1,17 +1,20 @@
+import { MEDIA_PATH } from './../services/api/api.service';
 import { Component, ViewChild, OnInit,  } from '@angular/core';
 import { NgbCarousel, NgbCarouselModule, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Producto } from '../Shared/Models/productos.models';
-import { ProductoService } from '../services/producto/producto.service';
-import { ApiService } from '../services/api/api.service';
 
+import { ApiService,} from '../services/api/api.service';
+import { ProductoService } from '../services/producto/producto.service';
+import { CarritoService } from '../services/carrito/carrito.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent{
+export class HomeComponent implements OnInit{
+  MEDIA_PATH=MEDIA_PATH
   images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
   productos_destacados:Producto[] = []
   paused = false;
@@ -21,44 +24,52 @@ export class HomeComponent{
   pauseOnFocus = true;
   responsiveOptions: any[] | undefined;
   constructor(
-	private productService: ProductoService,
-	private ApiService:ApiService
+	private xLevel: ProductoService,
+	private cart:CarritoService,
+	private api:ApiService
 				
 	){
     
   }
 
-  OnInit(){
-	this.productos_destacados =[
-		{
-			id:1,
-			codigo_principal:'ABCD000',
-			nombre:'Bolso Billetera Guess Cuero PU Saffiano',
-			precio:54.99,
-			tags:['Accesorios','Bolsos'],
-			imageURL:'0002_GUWBSSABE_3_1800x1800.jpg',
-			favorite:false,
-			stars:0,
-			stock:5,
-			bodega:'XLevel Bodega',
-			estado:'activo',
-			categoria:'Accesorio'
-		},
-		{
-		id:2,
-		codigo_principal:'ABCD001',
-		nombre:'Estuche Guess Saffiano Logo Metal iPhone 13 Serie',
-		precio:49.99,
-		tags:['Accesorios','iPhone', 'iPhone 13' ],
-		imageURL:'0001_GUHCP13MPSASBPI_4_1800x1800.jpg',
-		favorite:false,
-		stars:0,
-		stock:5,
-		bodega:'XLevel Bodega',
-		estado:'activo',
-		categoria:'Accesorio'
+ ngOnInit(){
+	// this.productos_destacados =[
+	// 	{
+	// 		id:1,
+	// 		codigo_principal:'ABCD000',
+	// 		nombre:'Bolso Billetera Guess Cuero PU Saffiano',
+	// 		precio:54.99,
+	// 		tags:['Accesorios','Bolsos'],
+	// 		imageURL:'0002_GUWBSSABE_3_1800x1800.jpg',
+	// 		favorite:false,
+	// 		stars:0,
+	// 		stock:5,
+	// 		bodega:'XLevel Bodega',
+	// 		estado:'activo',
+	// 		categoria:'Accesorio'
+	// 	},
+	// 	{
+	// 	id:2,
+	// 	codigo_principal:'ABCD001',
+	// 	nombre:'Estuche Guess Saffiano Logo Metal iPhone 13 Serie',
+	// 	precio:49.99,
+	// 	tags:['Accesorios','iPhone', 'iPhone 13' ],
+	// 	imageURL:'0001_GUHCP13MPSASBPI_4_1800x1800.jpg',
+	// 	favorite:false,
+	// 	stars:0,
+	// 	stock:5,
+	// 	bodega:'XLevel Bodega',
+	// 	estado:'activo',
+	// 	categoria:'Accesorio'
+	// 	}
+	// ]
+
+	this.api.getProducts().subscribe(
+		data=>{
+			this.productos_destacados=data
+			console.log(this.productos_destacados)
 		}
-	]
+	)
 
    this.responsiveOptions = [
 		{

@@ -3,6 +3,7 @@
     display: flexbox;
     background: white;
     padding: 0;
+    margin: 0;
     border-bottom: 1px solid #123123;
 }
 .logo{
@@ -21,7 +22,7 @@
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
-    margin-left: 2.5rem;
+    margin: 0;
     .main-menu-1{
         display: flex;
         flex-wrap: wrap;

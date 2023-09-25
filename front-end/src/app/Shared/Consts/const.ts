@@ -1,0 +1,1 @@
+export const ODOO_API="363273ca6695bfd8e0a1fd337aaf2f89e0aa4784";

@@ -1,1 +1,178 @@
-<p>producto works!</p>
+<main class="container-fluid m-0 p-0">
+    <div class="row justify-content-center mainBackground m-0 p-0 w-100 ">
+        <div class="col-md-6 col-sm-4 align-self-md-center m-5 cardBackground">
+            <div class="row">
+                <div class="col-6">
+                    <div class="productCard_leftSide ">
+                        <div class="productCard_brendBlock">
+                            <a class="productCard_brendBlock__imageBlock" href="#">
+                                <img src="https://github.com/BlackStar1991/CardProduct/blob/master/app/img/brtendsLogos/logo_sennheiser.png?raw=true" alt="sennheiser">
+                            </a>
+                        </div>
+
+                        <div class="sliderBlock">
+                            <div class="sliderBlock_items">
+                                <img [src]="pictures[control_index]" alt="">
+                                
+                            </div>
+
+                            
+                            <div class="sliderBlock_controls">
+                                <div class="sliderBlock_controls__navigatin">
+                                    <div class="sliderBlock_controls__wrapper">
+                                        <div class="sliderBlock_controls__arrow sliderBlock_controls__arrowBackward">
+                                            <i class="fa fa-angle-left" aria-hidden="true" (click)="previousSlide($event)"></i>
+                                        </div>
+                                        <div class="sliderBlock_controls__arrow sliderBlock_controls__arrowForward">
+                                            <i class="fa fa-angle-right" aria-hidden="true" (click)="nextSlide($event)"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="productCard_rightSide">
+                        <div class="block_specification">
+                            <div class="block_specification__specificationShow">
+                                <i class="fa fa-cog block_specification__button block_specification__button__rotate"
+                                   aria-hidden="true"></i>
+                                <span class="block_specification__text">spec</span>
+                            </div>
+                            <div class="block_specification__informationShow hide">
+                                <i class="fa fa-info-circle block_specification__button block_specification__button__jump"
+                                   aria-hidden="true"></i>
+                                <span class="block_specification__text">inform</span>
+                            </div>
+                        </div>
+
+                        <p class="block_model">
+                            <span class="block_model__text">Model: </span>
+                            <span class="block_model__number">{{producto.CODIGOPRINCIPAL}}</span>
+                        </p>
+
+                        <div class="block_product">
+                            <h2 class="block_name block_name__mainName">{{producto.MARCA}}<sup>&reg; </sup></h2>
+                            <h2 class="block_name block_name__addName">{{producto.NOMBRE}}</h2>
+
+                            <p class="block_product__advantagesProduct">
+                                Wireless headphones with integrated microphone
+                            </p>
+
+                            <div class="block_informationAboutDevice">
+
+                                <div class="block_descriptionCharacteristic block_descriptionCharacteristic__disActive">
+                                    <table class="block_specificationInformation_table">
+                                        <tr>
+                                            <th>Characteristic</th>
+                                            <th>Value</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Ear Coupling</td>
+                                            <td>Around Ear</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Transducer Principle</td>
+                                            <td>Dynamic, Closed-back</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Frequency Response</td>
+                                            <td>16Hz – 22kHz</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sound Pressure Level (SPL)</td>
+                                            <td>113 dB (Passive: 1 kHz/1 Vrms)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Harmonic Distortion (THD)</td>
+                                            <td>&lt;0.5% (1 kHz, 100 dB SPL)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Volume Control</td>
+                                            <td>Earcup control when Bluetooth connected</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Microphone Type</td>
+                                            <td>Dual omni-directional microphone <br>(2 mic beam forming
+                                                array)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cable / Connector</td>
+                                            <td>1.4m (Detachable) / 3.5mm Angled</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Weight</td>
+                                            <td>260g (9.17 oz)</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+
+                                <div class="block_descriptionInformation">
+                                    <span>Peak performance with active noise cancelation. Sennheiser's new MOMENTUM Wireless
+                                    - Closed circumauralheadphone featuring <a class="block_product__link"
+                                                                               href="#">Bluetooth<sup>&reg;</sup></a>  wireless technology and NoiseGard Hybrid active noise cancelation
+                                    </span>
+                                </div>
+
+                                <div class="block_rating clearfix">
+                                    <p-rating 
+                                        [(ngModel)]="producto.stars"
+                                        [cancel]="false"
+                                        (onRate)="productRating($event,producto.ID_PRODUCTO)"
+                                    >
+                                    </p-rating>
+
+                                    <span class="block_rating__avarage">{{producto.stars}}</span>
+                                    <span class="block_rating__reviews">(153 reviews)</span>
+
+                                </div>
+                                <div class="row ">
+                                    <div class="large-6 small-12 column left-align">
+                                        <div class="block_price">
+                                            <p class="block_price__currency">{{producto.PRECIOSINIVA}}</p>
+                                            <p class="block_price__shipping">Envío e impuestos no incluídos</p>
+                                        </div>
+                                        <div class="block_quantity clearfix">
+                                            <span class="text_specification">Cantidad</span>
+                                            <div class="block_quantity__chooseBlock">
+                                                <input class="block_quantity__number" name="quantityNumber"
+                                                       type="text" min="1" value="1" [max]="producto.STOCK">
+                                                <button class="block_quantity__button block_quantity__up"></button>
+                                                <button class="block_quantity__button block_quantity__down"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="large-6 small-12 column end">
+                                        <div class="block_goodColor">
+                                            <span class="text_specification">Choose your colors:</span>
+                                            <div class="block_goodColor__allColors">
+                                                <input type="radio" name="colorOfItem" class="radio_button"
+                                                       id="radioColor" checked/>
+                                                <label for="radioColor"
+                                                       class="block_goodColor__radio block_goodColor__black"></label>
+                                                <input type="radio" name="colorOfItem" class="radio_button"
+                                                       id="radioColor2"/>
+                                                <label for="radioColor2"
+                                                       class="block_goodColor__radio block_goodColor__silver"></label>
+                                            </div>
+                                        </div>
+                                        <button class="button button_addToCard">
+                                            Add to Cart
+                                        </button>
+                                    </div>
+                      
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+

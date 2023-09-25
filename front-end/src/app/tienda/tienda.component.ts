@@ -9,10 +9,12 @@ import { Observable,map,of } from 'rxjs';
 
 import { asyncMap } from '@apollo/client/utilities';
 import { ProductoService } from '../services/producto/producto.service';
-import { ApiService } from '../services/api/api.service';
+import { ApiService, MEDIA_PATH } from '../services/api/api.service';
+import { CarritoService } from '../services/carrito/carrito.service';
+import { Client } from '../Shared/Models/client.model';
 
 // import {} from '../../../../graphQL_API/media/'
-const MEDIA_PATH ='http://localhost:8089/media/'
+
 
 
 @Component({
@@ -23,24 +25,15 @@ const MEDIA_PATH ='http://localhost:8089/media/'
 export class TiendaComponent implements OnInit {
   //***********ATRIBUTOS***********//
 
-  home?:MenuItem  
-  menu_items?:MenuItem[]
+  home?:MenuItem = {icon:'pi pi-home',routerLink:'/'} 
   productos:ProductoModel[] = []
-  productoss:any;
-  // productos:Producto[] = []
+  filtros:string='tags ,categorias ,precios'
+  //pagination Variables
   pagina:number = 1;
   count:number = 0;
   tableSize: number = 7;
   tableSizes: number[] = [3,6,7,19];
-  filtros:string='tags ,categorias ,precios'
-
-  sortOptions!: SelectItem[];
-  sortOptions2!: SelectItem[];
-  sortOptions3!: SelectItem[];
-  sortKey?:string;
-  sortKey2?:string;
-  sortKey3?:string;
-
+  
   layout:any='grid';
   sortOrder!: number;
   sortField!: string;
@@ -49,53 +42,61 @@ export class TiendaComponent implements OnInit {
   dataStyle:any='container-fluid'
   pdataStyle:any='container-fluid'
   gridStyle:any='container-sm row-cols-auto'
-  menuStyle:any='bg-white'
+  menuStyle:any='dataviewMenu'
 
-  client?:any;
+  clientModel:Client;
 
-  options_tienda?:MenuItem[]
+  options_tienda?:MenuItem[]=[
+    {
+      label: 'Precio',
+      icon: 'pi pi-filter',
+      items:[
+        {
+          label:'Mayor a Menor',
+          icon: 'pi pi-descend',
+          command: (click)=>{
+            this.onSortChange('preciomayormenor');
+          }
+        },
+        {
+          label:'Menor a Mayor',
+          icon: 'pi pi-descend',
+          command: (click)=>{
+            this.onSortChange('preciomenormayor');
+          }
+        }
+      ]
+    }
+  ]
   //***********Varibles Observables para Asyncs******************//
   lista_productos?:Observable<Producto>[];
   lista_productos_filtrado?:Observable<Producto>[];
   media=MEDIA_PATH
   //***********CONSTRUCTOR(INIT)***********//
   constructor(private xLevel_api:ProductoService, private apollo:ApiService,
-              private grapQL_api:ApiService
+              private grapQL_api:ApiService,
+              private cart:CarritoService
                ){
     //in producton csrf excepmt will be down, so apollo needs to send the csrftoken
     // headers: {
     //   'X-CSRFToken': Cookies.get('csrftoken')
     // }
+    this.clientModel = new Client(0)
   }
 
   //***********METHODS***********//
   ngOnInit():void{
-    this.grapQL_api.getProducts()
-    .subscribe(
+    let tienda =this.grapQL_api.getProducts()
+    tienda.subscribe(
       {
         next: (response)=>{
           console.log('en getProductsAPI() llamando de graphQL')
           // Object.keys(response).forEach(key => console.log(key));
-          console.log('en mapeo de getProductAPI pasando de type(Producto) to type(ProductoModel)')
+          // console.log('en mapeo de getProductAPI pasando de type(Producto) to type(ProductoModel)')
           //la funcion ya envía cambiado el array a un array de productos.
-          this.productos = response.map(
-            item=>{
-              
-              // console.log(item)
-              // Object.keys(item).forEach(key => console.log(key));
-              let model=new ProductoModel(
-                item.id,
-                item.codigoPrincipal,
-                item.nombre,
-                item.precio,
-                // imageURL=item.imagenes[0]
-              )
-              model.imageURL= item.imagenes
-              model.ESTADO='EN STOCK'
-              return model
-            }
-          )
-          console.log(this.productos)
+          this.productos = response
+          // console.log(this.productos)
+          console.log('Exito')
         },
         error: (e)=>{
           console.log('APIERROR',e)
@@ -103,46 +104,10 @@ export class TiendaComponent implements OnInit {
         }
       }
     )
-      
-    this.sortOptions = [
-      { label: 'Precio Mayor a Menor', value: '!price' },
-      { label: 'Precio Menor a Mayor', value: 'price' }
-    ];
-    this.sortOptions2 = [
-      { label: 'Categoria1', value: 'categoria1' },
-      { label: 'categoria2', value: 'categoria2' }
-    ];
-    this.sortOptions3 = [
-      { label: 'marca1', value: 'marca1' },
-      { label: 'marca2', value: 'marca2' }
-    ];
-    this.menu_items =[{ label: 'Computer' }, { label: 'Notebook' }, { label: 'Accessories' }, { label: 'Backpacks' }, { label: 'Item' }];
 
-    this.home={icon:'pi pi-home',routerLink:'/'}
-
-    this.options_tienda=[
-      {
-        label: 'Precio',
-        icon: 'pi pi-filter',
-        items:[
-          {
-            label:'Mayor a Menor',
-            icon: 'pi pi-descend',
-            command: (click)=>{
-              this.onSortChange('preciomayormenor');
-            }
-          },
-          {
-            label:'Menor a Mayor',
-            icon: 'pi pi-descend',
-            command: (click)=>{
-              this.onSortChange('preciomenormayor');
-            }
-          }
-        ]
-      }
-    ]
+    // this.client=new Client(0)
     
+
   }
   
   
@@ -263,15 +228,19 @@ export class TiendaComponent implements OnInit {
 
   };
 
-  addToCart(event:any,product_id:number,client_id:number){
-    console.log('en addToCart')
-    console.log(event)
+  addToCart(event:any,product:ProductoModel,client:Client){
+    console.log('en addToCart TiendaComponent')
+    // console.log(event,product,client)
+    this.cart.addItem(product)
   };
-  addToFavorites(event:any,product_id:number,client_id:number){
-    console.log('en addToCart')
-    console.log(event)
+  addToFavorites(event:any,product:ProductoModel,client:Client){
+    console.log('en addToFavorites, Tienda Componenet')
+    
   };
   
     
-
+  hoverAnimation(event:any){
+    // console.log('animate ME', event.target)
+    // event.target.style = 'hover'
+  }
 }

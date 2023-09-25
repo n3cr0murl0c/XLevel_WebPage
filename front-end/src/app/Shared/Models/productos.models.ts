@@ -87,6 +87,7 @@ export interface AuthResponse {
     tags?:string[];
     precio?:number;
     iva?:number;
+    order_qty:number;
     constructor(
       ID_PRODUCTO: number,
       CODIGOPRINCIPAL: string,
@@ -135,6 +136,7 @@ export interface AuthResponse {
       this.tags=tags
       this.precio=precio
       this.iva=iva
+      this.order_qty=0
     }
     
 

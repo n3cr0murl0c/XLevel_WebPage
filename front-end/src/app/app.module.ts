@@ -33,7 +33,12 @@ import { GraphQLModule } from './graphql.module';
 import { ProductoComponent } from './tienda/producto/producto.component';
 import { CarritoComponent } from './tienda/carrito/carrito.component';
 import { HomeComponent } from './home/home.component';
+import { CardModule } from 'primeng/card';
 
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+import { BadgeModule } from 'primeng/badge';
+import { SidebarModule } from 'primeng/sidebar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +57,7 @@ import { HomeComponent } from './home/home.component';
     CarritosideComponent,
     ProductoComponent,
     CarritoComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -59,6 +65,7 @@ import { HomeComponent } from './home/home.component';
     AppRoutingModule,
     HttpClientModule,
     // NgxPaginationModule,
+    SidebarModule,
     NgbModule,
     FormsModule,
     RatingModule,
@@ -69,7 +76,12 @@ import { HomeComponent } from './home/home.component';
     CarouselModule,
     ButtonModule,
     MenubarModule,
-    GraphQLModule
+    GraphQLModule,
+    CardModule,
+    AvatarGroupModule,
+    AvatarModule, 
+    BadgeModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

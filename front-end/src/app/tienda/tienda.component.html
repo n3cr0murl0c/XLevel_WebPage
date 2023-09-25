@@ -1,21 +1,5 @@
 <main class="container-fluid ms-3">
 
-  <!-- <p-breadcrumb class="max-w-full" [model]="menu_items" [home]="home"></p-breadcrumb> -->
-  <div class="card" *ngIf="productoss">
-    <div class="card text-start" *ngFor="let producto of productoss">
-  
-      <img class="card-img-top" [src]="media+producto.imagenes" alt="{{producto.nombre}}">
-      <div class="card-body">
-        <h4 class="card-title">{{producto.nombre}}</h4>
-        <p class="card-text">
-          
-          
-        </p>
-      </div>
-    </div>
-
-  </div>
-  
 
 <p-dataView #dv 
   [value]="productos"
@@ -48,7 +32,7 @@
 
     <ng-template #listProduct let-product pTemplate="listItem">
       <div class="col-12">
-          <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+          <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4" onmouseenter="hoverAnimation($event)">
               <img class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round" [src]="media+ product.imageURL" [alt]="product.NOMBRE" />
               
               <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
@@ -75,7 +59,7 @@
                       <span class="iva">
                         NO Incluye IVA
                        </span>
-                      <button pButton (onclick)="addToCart($event,product.ID_PRODUCTO,client.id)" icon="pi pi-shopping-cart" class="md:align-self-end mb-2 p-button-rounded" [disabled]="product.ESTADO === 'OUTOFSTOCK'"></button>
+                      <button pButton (click)="addToCart($event,product,clientModel)" icon="pi pi-shopping-cart" class="md:align-self-end mb-2 p-button-rounded" [disabled]="product.ESTADO === 'OUTOFSTOCK'" ></button>
                   </div>
               </div>
           </div>
@@ -84,7 +68,7 @@
 
     <ng-template #gridProduct let-product pTemplate="gridItem">
         
-            <div class="col-3 border border-1 m-1">
+            <div class="col-3 border border-1 m-1 " (mouseenter)="hoverAnimation($event)">
                 <div class="row product-header">
                     <div class="col-6">
                       <span class="product-tag">
@@ -96,13 +80,18 @@
                       <p-tag [value]="product.ESTADO" [severity]="getSeverity(product)" ></p-tag>
                     </div>
                     <div class="col-3 product-favorite mx-auto justify-content-center">
-                      <button pButton (onclick)="addToFavorites($event,product.ID_PRODUCTO,client.id)" icon="pi pi-heart" class="p-button-rounded p-button-secondary p-button-text p-button-raised"></button>
+                      <button pButton (onclick)="addToFavorites($event,product,clientModel)" icon="pi pi-heart" class="p-button-rounded p-button-secondary p-button-text p-button-raised"></button>
                     </div>
                 </div>
                 <div class="row product-content">
+                  <a href="#" [routerLink]="['/tienda/producto/', product.ID_PRODUCTO]" class="text-decoration-none">
                     <img class="product-image" [src]="media+product.imageURL" [alt]="product.NOMBRE" />
+                  </a>  
+                  
                     
-                    <div class="product-name">{{ product.NOMBRE }}</div>
+                  <a href="#" [routerLink]="['/tienda/producto/', product.ID_PRODUCTO]" class="text-decoration-none">
+                    <div class="product-name ">{{ product.NOMBRE }}</div>
+                  </a>
                     <div class="row"><!-- Rating -->
                       <div class="col">
                         <div class="product-rating">
@@ -132,7 +121,7 @@
                     </div>
                     
                     <div class="col">
-                      <button pButton (onclick)="addToCart($event,product.ID_PRODUCTO,client.id)" icon="pi pi-shopping-cart" class="p-button-rounded p-button-success p-button-outlined" [disabled]="product.ESTADO === 'OUTOFSTOCK'"></button>
+                      <button pButton (click)="addToCart($event,product,clientModel)" icon="pi pi-shopping-cart" class="p-button-rounded p-button-success p-button-outlined" [disabled]="product.ESTADO === 'OUTOFSTOCK'"></button>
                     </div>
                 </div>
             </div>

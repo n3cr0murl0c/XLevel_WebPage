@@ -14,12 +14,12 @@
     >
         
       <ng-template let-product pTemplate="item">
-            <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
-                <div class="mb-3">
-                  <img class="product-image" [src]="'../../assets/images/productos/'+ product.imageURL" [alt]="product.nombre" />
+            <div class="border-1 surface-border border-round mx-auto text-center py-1 px-3 slideshow-wrapper">
+                <div class="product-image mx-auto">
+                  <img class="product-image" [src]=" MEDIA_PATH + product.imageURL" [alt]="product.NOMBRE" />
                 </div>
-                <div>
-                    <h4 class="mb-1">{{ product.nombre }}</h4>
+                <div class="product-content">
+                    <h4 class="mb-1">{{ product.NOMBRE }}</h4>
                     <h6 class="mt-0 mb-3">{{ '$' + product.precio }}</h6>
                     <p-tag [value]="product.estado" [severity]="getSeverity(product.estado)"></p-tag>
                     <div class="car-buttons mt-5">

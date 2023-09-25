@@ -143,7 +143,12 @@ $color-highlight: #ff3f40;
 	}
 
 }
-
+.hover-me:hover{
+	transform: scale(1.04);
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+	border: 0px solid beige;
+	cursor: pointer;
+}
 .product-card:hover{
 	transform: scale(1.08);
 	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
@@ -163,4 +168,15 @@ $color-highlight: #ff3f40;
 	padding: 0.5rem;
 	text-decoration: none;
 	color: black;
+}
+
+.dataviewMenu{
+	background: white;
+	background-color: white;
+	width: 250px;
+	height: 50px;
+}
+div.p-dataview-header{
+	width: 100vw;
+	height: .5rem;
 }

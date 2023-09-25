@@ -1,4 +1,70 @@
 <app-header></app-header>
+<div class="card flex justify-content-center">
+    <p-sidebar 
+        [(visible)]="sidebarVisible"
+        position="right"
+        [blockScroll]="true"
+        [styleClass]="carritoSidebarClass"
+    >
+        <ng-template pTemplate="header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <div class="carSide-header">
+                        <h2> Carrito</h2>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="content">
+            <div class="row">
+                <div class="col">
+                    <div class="carSide-content">
+                        <div class="card" *ngFor="let producto of listaProductos">
+                            <div class="row">
+                                <div class="col">
+                                    <img src="" alt="{{producto.NOMBRE}}" srcset="">
+                                </div>
+                                <div class="col">
+                                    <div class="row">{{producto.NOMBRE}}</div>
+                                    <div class="row">
+                                        <span>Marca:</span>{{producto.MARCA}}
+                                    </div>
+                                    <div class="row">
+                                        <span>Modelo:</span>{{producto.MODELO}}
+                                    </div>
+                                    <div class="row justify-content-between">
+                                        <div class="col">
+                                            <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-text"></p-button>
+                                        </div>
+    
+                                        <div class="col">
+                                            <span>
+                                                Precio:{{producto.PRECIOSINIVA}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <div class="row">
+                <div class="col">
+                    <p-button label="Editar Carrito" routerLink="/carrito" styleClass="p-button-sm"></p-button>
+                </div>
+                <div class="col">
+                    <p-button label="Checkout" styleClass="p-button-sm btn-Checkout" ></p-button>
+                </div>
+            </div>
+        </ng-template>
+    </p-sidebar>
+    
+  </div>
 <router-outlet></router-outlet>
 
 
